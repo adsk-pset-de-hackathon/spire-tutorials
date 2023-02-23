@@ -3,18 +3,28 @@ kind: Ingress
 metadata:
   name: spire-ingress
   namespace: spire
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internal
 spec:
   tls:
     - hosts:
         # TODO: Replace MY_DISCOVERY_DOMAIN with the FQDN of the Discovery Provider that you will configure in DNS
-        - MY_DISCOVERY_DOMAIN
+        - oidc-discovery.adskengineering.net
       secretName: oidc-secret
   rules:
     # TODO: Replace MY_DISCOVERY_DOMAIN with the FQDN of the Discovery Provider that you will configure in DNS
-    - host: MY_DISCOVERY_DOMAIN
+    - host: oidc-discovery.adskengineering.net
       http:
         paths:
           - path: /.well-known/openid-configuration
+            pathType: Prefix
+            backend:
+              service:
+                name: spire-oidc
+                port:
+                  number: 443
+          - path: /keys
             pathType: Prefix
             backend:
               service:

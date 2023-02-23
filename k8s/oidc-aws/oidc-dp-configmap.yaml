@@ -7,13 +7,13 @@ data:
   oidc-discovery-provider.conf: |
     log_level = "INFO"
     # TODO: Replace MY_DISCOVERY_DOMAIN with the FQDN of the Discovery Provider that you will configure in DNS
-    domains = ["MY_DISCOVERY_DOMAIN"]
+    domains = ["oidc-discovery.adskengineering.net"]
     acme {
         directory_url = "https://acme-v02.api.letsencrypt.org/directory"
         cache_dir = "/run/spire"
         tos_accepted = true
         # TODO: Change MY_EMAIL_ADDRESS with your email
-        email = "MY_EMAIL_ADDRESS"
+        email = "jesse.sanford@autodesk.com"
     }
     server_api {
       address = "unix:///tmp/spire-server/private/api.sock"
